@@ -1,41 +1,186 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #ff9a9e, #fad0c4);
-    text-align: center;
-    color: white;
+/* ===========================
+   HBD Egrrischa - Style.css
+   =========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.container {
-    margin-top: 80px;
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    background:linear-gradient(135deg,#1d2671,#c33764);
+
+    color:white;
 }
 
-h1 {
-    font-size: 40px;
+/* Background Bintang */
+
+#stars{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background-image:
+    radial-gradient(white 1px, transparent 1px);
+
+    background-size:40px 40px;
+
+    opacity:.25;
+
+    animation:moveStars 40s linear infinite;
+
+    z-index:-1;
+
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 20px;
+/* Card */
+
+.container{
+
+    width:90%;
+
+    max-width:520px;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(15px);
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 35px rgba(0,0,0,.35);
+
 }
 
-button:hover {
-    background-color: #fff;
-    color: black;
+/* Judul */
+
+.container h2{
+
+    font-size:26px;
+
+    margin-bottom:15px;
+
 }
 
-.hidden {
-    display: none;
+.container h1{
+
+    font-size:50px;
+
+    color:#FFD6E7;
+
+    margin-bottom:20px;
+
 }
 
-#pesan {
-    margin-top: 30px;
-    background: rgba(0,0,0,0.3);
-    padding: 20px;
-    border-radius: 10px;
+.container p{
+
+    font-size:18px;
+
+    line-height:30px;
+
+    margin-bottom:35px;
+
+}
+
+/* Button */
+
+button{
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    padding:16px 35px;
+
+    border-radius:40px;
+
+    font-size:18px;
+
+    background:#ff4f81;
+
+    color:white;
+
+    transition:.35s;
+
+}
+
+button:hover{
+
+    transform:scale(1.08);
+
+    background:#ff2f6d;
+
+}
+
+/* Animasi */
+
+@keyframes moveStars{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(-300px);
+
+    }
+
+}
+
+/* Responsive */
+
+@media(max-width:600px){
+
+.container h1{
+
+    font-size:38px;
+
+}
+
+.container h2{
+
+    font-size:22px;
+
+}
+
+.container p{
+
+    font-size:16px;
+
+}
+
+button{
+
+    width:100%;
+
+}
+
 }
