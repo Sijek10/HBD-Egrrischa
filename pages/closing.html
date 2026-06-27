@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Penutup ❤️</title>
+  <style>
+    body {
+      margin: 0; min-height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Georgia', serif;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 24px; box-sizing: border-box;
+      overflow: hidden; position: relative;
+    }
+    .box {
+      background: rgba(255,255,255,0.92); border-radius: 20px;
+      padding: 40px 30px; max-width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      position: relative; z-index: 2;
+    }
+    h1 { color: #c2185b; margin-bottom: 16px; font-size: 1.4em; cursor: pointer; }
+    p { color: #4a4a4a; line-height: 1.7; margin-bottom: 24px; }
+    .hug-btn {
+      padding: 12px 26px; border: none; border-radius: 25px;
+      background: #c2185b; color: white; font-size: 1em;
+      cursor: pointer; font-family: inherit;
+    }
+    .hug-emoji {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 4em; z-index: 10; pointer-events: none;
+    }
+    .hug-emoji.show { animation: hugGrow 2s ease-out forwards; }
+    @keyframes hugGrow {
+      0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+      60% { transform: translate(-50%, -50%) scale(6) rotate(15deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(8) rotate(-10deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="box">
+    <h1 id="eggTitle">Terima Kasih Sudah Membuka Semua Kejutan Ini 🥰</h1>
+    <p>Semoga hari ulang tahunmu dipenuhi tawa dan kebahagiaan, sayangku.</p>
+    <button class="hug-btn" id="hugBtn">Peluk Virtual 🤗</button>
+  </div>
+
+  <div class="hug-emoji" id="hugEmoji">🤗❤️</div>
+
+  <script>
+    document.getElementById('hugBtn').addEventListener('click', function(){
+      document.getElementById('hugEmoji').classList.add('show');
+    });
+
+    let eggTap6 = 0;
+    document.getElementById("eggTitle").addEventListener("click", function(){
+      eggTap6++;
+      if(eggTap6 === 5){
+        alert("Rahasia kecil 🎉\n\nIni bukan akhir cerita, tapi baru permulaan. Aku nggak sabar nunggu hari kita bener-bener jadi satu, selamanya.");
+        eggTap6 = 0;
+      }
+    });
+  </script>
+</body>
+</html>
