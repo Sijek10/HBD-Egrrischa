@@ -1,38 +1,104 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Gallery ❤️</title>
-
-<link rel="stylesheet" href="../css/style.css">
-
+  <meta charset="UTF-8">
+  <title>Galeri Kenangan ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 30px 16px 60px;
+      box-sizing: border-box;
+    }
+    h1 {
+      color: #c2185b;
+      margin-bottom: 30px;
+    }
+    .polaroid {
+      background: white;
+      padding: 14px 14px 30px;
+      max-width: 280px;
+      margin: 0 auto 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      opacity: 0;
+      transform: translateY(40px) rotate(0deg);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .polaroid:nth-child(odd) { transform: translateY(40px) rotate(-4deg); }
+    .polaroid:nth-child(even) { transform: translateY(40px) rotate(4deg); }
+    .polaroid.visible {
+      opacity: 1;
+      transform: translateY(0) rotate(-2deg);
+    }
+    .polaroid:nth-child(even).visible {
+      transform: translateY(0) rotate(2deg);
+    }
+    .polaroid img {
+      width: 100%;
+      display: block;
+      border-radius: 2px;
+    }
+    .caption {
+      margin-top: 14px;
+      font-family: 'Georgia', serif;
+      color: #555;
+      font-size: 0.95em;
+    }
+    .next-btn {
+      margin-top: 10px;
+      padding: 12px 26px;
+      border: none;
+      border-radius: 25px;
+      background: #c2185b;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      font-family: inherit;
+    }
+  </style>
 </head>
-
 <body>
+  <h1>Galeri Kenangan Kita ❤️</h1>
 
-<div class="container">
+  <div class="polaroid">
+    <img src="../assets/foto1.jpg" alt="Foto 1">
+    <div class="caption">Tulis caption foto pertama di sini</div>
+  </div>
 
-<h2>📸 Gallery Egrrischa ❤️</h2>
+  <div class="polaroid">
+    <img src="../assets/foto2.jpg" alt="Foto 2">
+    <div class="caption">Tulis caption foto kedua di sini</div>
+  </div>
 
-<p>
+  <div class="polaroid">
+    <img src="../assets/foto3.jpg" alt="Foto 3">
+    <div class="caption">Tulis caption foto ketiga di sini</div>
+  </div>
 
-Nanti foto-foto terbaik akan muncul di sini.
+  <button class="next-btn" id="nextBtn">Lanjut ➡️</button>
 
-</p>
+  <script>
+    const polaroids = document.querySelectorAll('.polaroid');
 
-<button>
+    function checkVisible(){
+      polaroids.forEach(p => {
+        const rect = p.getBoundingClientRect();
+        if(rect.top < window.innerHeight * 0.85){
+          p.classList.add('visible');
+        }
+      });
+    }
 
-Happy Birthday 🎉
+    window.addEventListener('scroll', checkVisible);
+    window.addEventListener('load', checkVisible);
 
-</button>
-
-</div>
-
+    document.getElementById('nextBtn').addEventListener('click', function(){
+      window.location.href = "reasons.html";
+    });
+  </script>
 </body>
-
 </html>
