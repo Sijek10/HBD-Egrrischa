@@ -14,9 +14,7 @@
     <div class="container">
         <h2>🎂 Happy Birthday 🎂</h2>
         <h1>Egrrischa ❤️</h1>
-        <p>
-            Ada sesuatu yang spesial untukmu...
-        </p>
+        <p id="introText"></p>
         <button id="startBtn">
             Buka Kejutan 🎁
         </button>
@@ -26,6 +24,15 @@
     <script src="js/fireworks.js"></script>
     <script src="js/envelope.js"></script>
     <script src="js/music.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            typingEffect(
+                document.getElementById("introText"),
+                "Ada sesuatu yang spesial untukmu...",
+                60
+            );
+        });
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>
