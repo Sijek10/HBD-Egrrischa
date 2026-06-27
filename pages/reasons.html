@@ -62,6 +62,7 @@
       cursor: pointer; font-family: inherit;
       position: relative; z-index: 2;
     }
+    .nav-row { display: flex; gap: 10px; justify-content: center; position: relative; z-index: 2; }
   </style>
 </head>
 <body>
@@ -69,7 +70,10 @@
 
   <h1 id="eggTitle">Tap Tiap Kartu untuk Lihat Alasannya ❤️</h1>
   <div class="grid" id="grid"></div>
-  <button class="next-btn" id="nextBtn">Lanjut ➡️</button>
+  <div class="nav-row">
+    <button class="next-btn" id="backBtn" style="background:#888;">⬅️ Back</button>
+    <button class="next-btn" id="nextBtn">Next ➡️</button>
+  </div>
 
   <script>
     const reasons = [
@@ -99,6 +103,10 @@
 
     document.getElementById('nextBtn').addEventListener('click', function(){
       window.location.href = "closing.html";
+    });
+
+    document.getElementById('backBtn').addEventListener('click', function(){
+      window.location.href = "gallery.html";
     });
 
     let eggTap5 = 0;
