@@ -5,64 +5,34 @@
   <title>Galeri Kenangan ❤️</title>
   <style>
     body {
-      margin: 0;
-      min-height: 100vh;
+      margin: 0; min-height: 100vh;
       background: linear-gradient(135deg, #ffdde1, #ee9ca7);
       font-family: 'Poppins', sans-serif;
-      text-align: center;
-      padding: 30px 16px 60px;
-      box-sizing: border-box;
+      text-align: center; padding: 30px 16px 60px; box-sizing: border-box;
     }
-    h1 {
-      color: #c2185b;
-      margin-bottom: 30px;
-    }
+    h1 { color: #c2185b; margin-bottom: 30px; cursor: pointer; }
     .polaroid {
-      background: white;
-      padding: 14px 14px 30px;
-      max-width: 280px;
-      margin: 0 auto 40px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      border-radius: 4px;
-      opacity: 0;
+      background: white; padding: 14px 14px 30px; max-width: 280px;
+      margin: 0 auto 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border-radius: 4px; opacity: 0;
       transform: translateY(40px) rotate(0deg);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
     .polaroid:nth-child(odd) { transform: translateY(40px) rotate(-4deg); }
     .polaroid:nth-child(even) { transform: translateY(40px) rotate(4deg); }
-    .polaroid.visible {
-      opacity: 1;
-      transform: translateY(0) rotate(-2deg);
-    }
-    .polaroid:nth-child(even).visible {
-      transform: translateY(0) rotate(2deg);
-    }
-    .polaroid img {
-      width: 100%;
-      display: block;
-      border-radius: 2px;
-    }
-    .caption {
-      margin-top: 14px;
-      font-family: 'Georgia', serif;
-      color: #555;
-      font-size: 0.95em;
-    }
+    .polaroid.visible { opacity: 1; transform: translateY(0) rotate(-2deg); }
+    .polaroid:nth-child(even).visible { transform: translateY(0) rotate(2deg); }
+    .polaroid img { width: 100%; display: block; border-radius: 2px; }
+    .caption { margin-top: 14px; font-family: 'Georgia', serif; color: #555; font-size: 0.95em; }
     .next-btn {
-      margin-top: 10px;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 25px;
-      background: #c2185b;
-      color: white;
-      font-size: 1em;
-      cursor: pointer;
-      font-family: inherit;
+      margin-top: 10px; padding: 12px 26px; border: none; border-radius: 25px;
+      background: #c2185b; color: white; font-size: 1em;
+      cursor: pointer; font-family: inherit;
     }
   </style>
 </head>
 <body>
-  <h1>Galeri Kenangan Kita ❤️</h1>
+  <h1 id="eggTitle">Galeri Kenangan Kita ❤️</h1>
 
   <div class="polaroid">
     <img src="../assets/foto1.jpg" alt="Foto 1">
@@ -92,12 +62,20 @@
         }
       });
     }
-
     window.addEventListener('scroll', checkVisible);
     window.addEventListener('load', checkVisible);
 
     document.getElementById('nextBtn').addEventListener('click', function(){
       window.location.href = "reasons.html";
+    });
+
+    let eggTap4 = 0;
+    document.getElementById("eggTitle").addEventListener("click", function(){
+      eggTap4++;
+      if(eggTap4 === 5){
+        alert("Rahasia kecil 🎉\n\nSetiap foto di galeri ini nyimpen cerita yang aku selalu suka inget. Makasih udah jadi bagian dari kenangan terbaikku.");
+        eggTap4 = 0;
+      }
     });
   </script>
 </body>
