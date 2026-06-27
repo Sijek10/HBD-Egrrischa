@@ -5,48 +5,35 @@
   <title>Joget Bareng! 🐱</title>
   <style>
     body {
-      margin: 0;
-      min-height: 100vh;
+      margin: 0; min-height: 100vh;
       background: linear-gradient(135deg, #ff9a9e, #fecfef, #fad0c4);
       background-size: 400% 400%;
       animation: bgShift 6s ease infinite;
       font-family: 'Poppins', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden; text-align: center;
+      padding: 20px; box-sizing: border-box;
     }
     @keyframes bgShift {
       0%,100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-
     h1 {
       color: #fff;
       text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
       margin-bottom: 30px;
+      cursor: pointer;
     }
-
     .stage {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative; width: 280px; height: 280px;
+      display: flex; align-items: center; justify-content: center;
     }
-
     .cat {
-      font-size: 6em;
-      display: inline-block;
+      font-size: 6em; display: inline-block;
       animation: bigDance 0.6s infinite ease-in-out;
       filter: drop-shadow(0 8px 10px rgba(0,0,0,0.25));
     }
-
     @keyframes bigDance {
       0%   { transform: translateY(0) rotate(-15deg) scale(1); }
       20%  { transform: translateY(-25px) rotate(15deg) scale(1.05); }
@@ -55,10 +42,8 @@
       80%  { transform: translateY(0) rotate(-10deg) scale(1); }
       100% { transform: translateY(0) rotate(-15deg) scale(1); }
     }
-
     .note {
-      position: absolute;
-      font-size: 1.8em;
+      position: absolute; font-size: 1.8em;
       animation: noteFly 1.6s infinite ease-in-out;
       opacity: 0;
     }
@@ -66,28 +51,20 @@
     .note:nth-child(2) { top: 20%; right: 5%; animation-delay: 0.4s; }
     .note:nth-child(3) { bottom: 15%; left: 10%; animation-delay: 0.8s; }
     .note:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 1.2s; }
-
     @keyframes noteFly {
       0% { transform: translateY(0) scale(0.5); opacity: 0; }
       50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
       100% { transform: translateY(-60px) scale(0.5); opacity: 0; }
     }
-
     .music-btn {
-      margin-top: 20px;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 25px;
-      background: #c2185b;
-      color: white;
-      font-size: 1em;
-      cursor: pointer;
-      font-family: inherit;
+      margin-top: 20px; padding: 12px 26px; border: none; border-radius: 25px;
+      background: #c2185b; color: white; font-size: 1em;
+      cursor: pointer; font-family: inherit;
     }
   </style>
 </head>
 <body>
-  <h1>Joget Bareng Yuk! 🎉</h1>
+  <h1 id="eggTitle">Joget Bareng Yuk! 🎉</h1>
 
   <div class="stage">
     <span class="note">🎵</span>
@@ -122,6 +99,15 @@
 
     document.getElementById("nextBtn").addEventListener("click", function(){
       window.location.href = "question.html";
+    });
+
+    let eggTap2 = 0;
+    document.getElementById("eggTitle").addEventListener("click", function(){
+      eggTap2++;
+      if(eggTap2 === 5){
+        alert("Rahasia kecil 🎉\n\nSi kucing ini sebenernya mewakili aku, lagi joget saking senangnya ulang tahunmu tiba. Makasih udah bikin hari-hariku selucu dan seceria ini.");
+        eggTap2 = 0;
+      }
     });
   </script>
 </body>
