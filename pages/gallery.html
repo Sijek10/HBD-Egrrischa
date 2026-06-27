@@ -54,6 +54,7 @@
       cursor: pointer; font-family: inherit;
       position: relative; z-index: 2;
     }
+    .nav-row { display: flex; gap: 10px; justify-content: center; position: relative; z-index: 2; }
   </style>
 </head>
 <body>
@@ -76,7 +77,10 @@
     <div class="caption">Tulis caption foto ketiga di sini</div>
   </div>
 
-  <button class="next-btn" id="nextBtn">Lanjut ➡️</button>
+  <div class="nav-row">
+    <button class="next-btn" id="backBtn" style="background:#888;">⬅️ Back</button>
+    <button class="next-btn" id="nextBtn">Next ➡️</button>
+  </div>
 
   <script>
     const polaroids = document.querySelectorAll('.polaroid');
@@ -94,6 +98,10 @@
 
     document.getElementById('nextBtn').addEventListener('click', function(){
       window.location.href = "reasons.html";
+    });
+
+    document.getElementById('backBtn').addEventListener('click', function(){
+      window.location.href = "question.html";
     });
 
     let eggTap4 = 0;
