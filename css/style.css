@@ -1,0 +1,114 @@
+/* ===========================
+   HBD Egrrischa - style.css
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(135deg,#1d2671,#c33764);
+    color:#ffffff;
+}
+
+/* Background bintang */
+
+#stars{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:radial-gradient(white 1px, transparent 1px);
+    background-size:40px 40px;
+    opacity:.3;
+    animation:moveStars 40s linear infinite;
+    z-index:-1;
+}
+
+/* Card */
+
+.container{
+    width:90%;
+    max-width:520px;
+    padding:40px;
+    text-align:center;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+.container h2{
+    font-size:26px;
+    margin-bottom:15px;
+}
+
+.container h1{
+    font-size:48px;
+    color:#ffd6e7;
+    margin-bottom:20px;
+}
+
+.container p{
+    font-size:18px;
+    margin-bottom:30px;
+    line-height:1.6;
+}
+
+button{
+    padding:15px 35px;
+    border:none;
+    border-radius:50px;
+    background:#ff4f81;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#ff2d6f;
+    transform:scale(1.08);
+}
+
+@keyframes moveStars{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(-300px);
+    }
+}
+
+@media(max-width:600px){
+
+.container{
+    padding:25px;
+}
+
+.container h1{
+    font-size:36px;
+}
+
+.container h2{
+    font-size:22px;
+}
+
+.container p{
+    font-size:16px;
+}
+
+button{
+    width:100%;
+}
+
+}
