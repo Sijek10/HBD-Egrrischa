@@ -74,7 +74,7 @@
     }
 
     .music-btn {
-      margin-top: 30px;
+      margin-top: 20px;
       padding: 12px 26px;
       border: none;
       border-radius: 25px;
@@ -98,6 +98,8 @@
   </div>
 
   <button class="music-btn" id="musicBtn">▶️ Putar Musik</button>
+  <br><br>
+  <button class="music-btn" id="nextBtn" style="background:#888;">Lanjut ➡️</button>
 
   <audio id="bgMusic" loop>
     <source src="../assets/music.mp3" type="audio/mpeg">
@@ -116,6 +118,10 @@
         btn.textContent = "⏸️ Pause Musik";
       }
       isPlaying = !isPlaying;
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", function(){
+      window.location.href = "question.html";
     });
   </script>
 </body>
