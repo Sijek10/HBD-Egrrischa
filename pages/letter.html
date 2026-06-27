@@ -132,6 +132,8 @@
     <div class="heart">❤️</div>
     <br>
     <button class="music-btn" id="musicBtn">🎵 Putar Musik</button>
+    <br><br>
+    <button class="music-btn" id="nextBtn" style="background:#888;">Lanjut ➡️</button>
   </div>
 
   <audio id="bgMusic" loop>
@@ -163,9 +165,13 @@
         isPlaying = !isPlaying;
       });
 
-      setTimeout(function(){
+      document.getElementById("bgMusic").addEventListener("ended", function(){
         window.location.href = "dance.html";
-      }, 8000);
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", function(){
+        window.location.href = "dance.html";
+      });
 
       const canvas = document.getElementById('confetti');
       const ctx = canvas.getContext('2d');
