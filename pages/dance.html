@@ -87,6 +87,7 @@
       cursor: pointer; font-family: inherit;
       position: relative; z-index: 2;
     }
+    .nav-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; position: relative; z-index: 2; }
   </style>
 </head>
 <body>
@@ -103,8 +104,10 @@
   </div>
 
   <button class="music-btn" id="musicBtn">▶️ Putar Musik</button>
-  <br><br>
-  <button class="music-btn" id="nextBtn" style="background:#888;">Lanjut ➡️</button>
+  <div class="nav-row">
+    <button class="music-btn" id="backBtn" style="background:#888;">⬅️ Back</button>
+    <button class="music-btn" id="nextBtn" style="background:#888;">Next ➡️</button>
+  </div>
 
   <audio id="bgMusic" loop>
     <source src="../assets/music2.mp3" type="audio/mpeg">
@@ -127,6 +130,10 @@
 
     document.getElementById("nextBtn").addEventListener("click", function(){
       window.location.href = "question.html";
+    });
+
+    document.getElementById("backBtn").addEventListener("click", function(){
+      window.location.href = "letter.html";
     });
 
     let eggTap2 = 0;
