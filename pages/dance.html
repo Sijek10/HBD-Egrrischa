@@ -6,9 +6,9 @@
   <style>
     body {
       margin: 0; min-height: 100vh;
-      background: linear-gradient(135deg, #ff9a9e, #fecfef, #fad0c4);
+      background: linear-gradient(135deg, #ff9a9e, #fecfef, #fad0c4, #a18cd1);
       background-size: 400% 400%;
-      animation: bgShift 6s ease infinite;
+      animation: bgShift 10s ease infinite;
       font-family: 'Poppins', sans-serif;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -67,6 +67,28 @@
       80%  { transform: translateY(0) rotate(-10deg) scale(1); }
       100% { transform: translateY(0) rotate(-15deg) scale(1); }
     }
+    .mini-cat {
+      position: fixed;
+      font-size: 2.5em;
+      z-index: 2;
+      animation: miniDance 0.7s infinite ease-in-out;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    }
+    .mini-cat.tl { top: 6%; left: 5%; animation-delay: 0.1s; }
+    .mini-cat.tr { top: 6%; right: 5%; animation-delay: 0.3s; transform: scaleX(-1); }
+    .mini-cat.bl { bottom: 8%; left: 6%; animation-delay: 0.5s; }
+    .mini-cat.br { bottom: 8%; right: 6%; animation-delay: 0.2s; transform: scaleX(-1); }
+    @keyframes miniDance {
+      0%, 100% { transform: translateY(0) rotate(-10deg); }
+      50% { transform: translateY(-12px) rotate(10deg); }
+    }
+    .mini-cat.tr, .mini-cat.br {
+      animation-name: miniDanceFlip;
+    }
+    @keyframes miniDanceFlip {
+      0%, 100% { transform: scaleX(-1) translateY(0) rotate(-10deg); }
+      50% { transform: scaleX(-1) translateY(-12px) rotate(10deg); }
+    }
     .note {
       position: absolute; font-size: 1.8em;
       animation: noteFly 1.6s infinite ease-in-out;
@@ -85,13 +107,18 @@
       margin-top: 20px; padding: 12px 26px; border: none; border-radius: 25px;
       background: #c2185b; color: white; font-size: 1em;
       cursor: pointer; font-family: inherit;
-      position: relative; z-index: 2;
+      position: relative; z-index: 3;
     }
-    .nav-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; position: relative; z-index: 2; }
+    .nav-row { display: flex; gap: 10px; justify-content: center; margin-top: 14px; position: relative; z-index: 3; }
   </style>
 </head>
 <body>
   <canvas id="confetti"></canvas>
+
+  <span class="mini-cat tl">🐱</span>
+  <span class="mini-cat tr">🐱</span>
+  <span class="mini-cat bl">🐱</span>
+  <span class="mini-cat br">🐱</span>
 
   <h1 id="eggTitle">Joget Bareng Yuk! 🎉</h1>
 
