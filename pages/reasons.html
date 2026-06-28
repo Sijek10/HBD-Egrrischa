@@ -33,7 +33,11 @@
       50% { transform: translateY(-55vh) scale(1.3); opacity: 1; }
       100% { transform: translateY(-110vh) scale(0.8); opacity: 0; }
     }
-    h1 { color: #c2185b; margin-bottom: 24px; cursor: pointer; position: relative; z-index: 2; }
+    h1 { color: #c2185b; margin-bottom: 10px; cursor: pointer; position: relative; z-index: 2; }
+    #progress {
+      color: #c2185b; font-weight: 600; margin-bottom: 20px;
+      position: relative; z-index: 2; font-size: 0.95em;
+    }
     .grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 14px; max-width: 420px; margin: 0 auto 30px;
@@ -47,14 +51,41 @@
     .card.flipped .card-inner { transform: rotateY(180deg); }
     .card-front, .card-back {
       position: absolute; width: 100%; height: 100%;
-      backface-visibility: hidden; border-radius: 14px;
+      backface-visibility: hidden; border-radius: 16px;
       display: flex; align-items: center; justify-content: center;
-      padding: 8px; box-sizing: border-box;
+      padding: 10px; box-sizing: border-box;
     }
-    .card-front { background: #c2185b; color: white; font-size: 1.8em; }
+    .card-front {
+      background: linear-gradient(135deg, #c2185b, #ff6b9d);
+      color: white;
+      font-size: 1.9em;
+      box-shadow: 0 6px 16px rgba(194, 24, 91, 0.4);
+      animation: cardPulse 2s infinite ease-in-out;
+    }
+    @keyframes cardPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
     .card-back {
-      background: white; color: #4a4a4a; font-size: 0.78em;
-      transform: rotateY(180deg); box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      background: linear-gradient(135deg, #fff5f7, #ffe4ec);
+      color: #b0335f;
+      font-family: 'Georgia', serif;
+      font-size: 0.85em;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: 0.2px;
+      transform: rotateY(180deg);
+      box-shadow: 0 6px 16px rgba(194, 24, 91, 0.25), inset 0 0 0 2px rgba(194, 24, 91, 0.15);
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+    }
+    .card-back.special {
+      background: linear-gradient(135deg, #c2185b, #ff6b9d);
+      color: white;
+      text-shadow: none;
+    }
+    #bonusMsg {
+      color: #c2185b; font-weight: 700; margin-bottom: 16px;
+      min-height: 24px; position: relative; z-index: 2;
     }
     .next-btn {
       padding: 12px 26px; border: none; border-radius: 25px;
@@ -69,33 +100,82 @@
   <canvas id="confetti"></canvas>
 
   <h1 id="eggTitle">Tap Tiap Kartu untuk Lihat Alasannya ❤️</h1>
+  <div id="progress">0 dari 7 kartu terbuka 💕</div>
   <div class="grid" id="grid"></div>
+  <div id="bonusMsg"></div>
   <div class="nav-row">
     <button class="next-btn" id="backBtn" style="background:#888;">⬅️ Back</button>
     <button class="next-btn" id="nextBtn">Next ➡️</button>
   </div>
 
   <script>
-    const reasons = [
-      "Karena senyummu selalu bikin hariku lebih baik.",
-      "Karena kamu sabar mendengarkan semua ceritaku.",
-      "Karena kamu selalu ada saat aku butuh kamu.",
-      "Karena kamu apa adanya, dan itu yang aku suka.",
-      "Karena bersamamu, semua terasa lebih ringan.",
-      "Karena kamu adalah rumah yang aku tuju."
+    const reasonsData = [
+      { icon: "🌸", text: "Karena senyummu selalu bikin hariku lebih baik." },
+      { icon: "💕", text: "Karena kamu sabar mendengarkan semua ceritaku." },
+      { icon: "✨", text: "Karena kamu selalu ada saat aku butuh kamu." },
+      { icon: "🎀", text: "Karena kamu apa adanya, dan itu yang aku suka." },
+      { icon: "💌", text: "Karena bersamamu, semua terasa lebih ringan." },
+      { icon: "😊", text: "Karena kamu adalah rumah yang aku tuju." },
+      { icon: "🎁", text: "Mau nggak jadi bagian dari semua alasan ini selamanya?", special: true }
     ];
 
+    // Shuffle posisi kartu setiap halaman dibuka
+    function shuffle(arr){
+      const a = [...arr];
+      for(let i = a.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    const shuffledReasons = shuffle(reasonsData);
     const grid = document.getElementById('grid');
-    reasons.forEach((text) => {
+    const progressEl = document.getElementById('progress');
+    const bonusMsg = document.getElementById('bonusMsg');
+    let openedCount = 0;
+    const totalCards = shuffledReasons.length;
+
+    // Efek suara klik sederhana, tanpa file audio (Web Audio API)
+    function playClickSound(){
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.15);
+      } catch(e) {}
+    }
+
+    shuffledReasons.forEach((item) => {
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
         <div class="card-inner">
-          <div class="card-front">❤️</div>
-          <div class="card-back">${text}</div>
+          <div class="card-front">${item.icon}</div>
+          <div class="card-back ${item.special ? 'special' : ''}">${item.text}</div>
         </div>
       `;
+      let alreadyOpened = false;
       card.addEventListener('click', function(){
+        if(!alreadyOpened){
+          alreadyOpened = true;
+          openedCount++;
+          progressEl.textContent = `${openedCount} dari ${totalCards} kartu terbuka 💕`;
+          playClickSound();
+
+          if(openedCount === totalCards){
+            bonusMsg.textContent = "Yeay, semua alasan udah kebuka! 🎉";
+            triggerBigConfetti();
+          }
+        }
         card.classList.toggle('flipped');
       });
       grid.appendChild(card);
@@ -113,7 +193,7 @@
     document.getElementById("eggTitle").addEventListener("click", function(){
       eggTap5++;
       if(eggTap5 === 5){
-        alert("Rahasia kecil 🎉\n\nSebenernya alasan aku sayang kamu nggak cukup ditulis di 6 kartu itu — ada ratusan alasan lain yang nggak muat aku tulis semua.");
+        alert("Rahasia kecil 🎉\n\nSebenernya alasan aku sayang kamu nggak cukup ditulis di kartu-kartu itu — ada ratusan alasan lain yang nggak muat aku tulis semua.");
         eggTap5 = 0;
       }
     });
@@ -124,9 +204,11 @@
     canvas.height = window.innerHeight;
     const colors = ['#ff6b81', '#ffb6c1', '#ff85a2', '#ffd1dc', '#ff4d6d', '#ffe066', '#a29bfe'];
     let confettiPieces = [];
+    let extraBurst = false;
 
     function spawnConfetti(){
-      for(let i = 0; i < 2; i++){
+      const count = extraBurst ? 6 : 2;
+      for(let i = 0; i < count; i++){
         confettiPieces.push({
           x: Math.random() * canvas.width, y: -10,
           size: Math.random() * 8 + 4,
@@ -137,6 +219,12 @@
         });
       }
     }
+
+    function triggerBigConfetti(){
+      extraBurst = true;
+      setTimeout(() => { extraBurst = false; }, 2500);
+    }
+
     function drawConfetti(){
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       confettiPieces.forEach(p => {
