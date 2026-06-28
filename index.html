@@ -22,6 +22,30 @@
             padding: 24px;
             box-sizing: border-box;
         }
+        #loadingScreen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+        .loading-heart {
+            font-size: 3em;
+            animation: heartbeatLoad 1s infinite ease-in-out;
+        }
+        @keyframes heartbeatLoad {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        #loadingScreen p {
+            color: #c2185b;
+            font-weight: 600;
+            margin-top: 16px;
+        }
         .floating-heart, .floating-star {
             position: fixed;
             bottom: -50px;
@@ -90,8 +114,13 @@
     </style>
 </head>
 <body>
+    <div id="loadingScreen">
+      <div class="loading-heart">💖</div>
+      <p>Menyiapkan kejutan...</p>
+    </div>
+
     <div id="stars"></div>
-    <div class="container">
+    <div class="container" id="mainContainer" style="display:none;">
         <h2>🎂 Happy Birthday 🎂</h2>
         <h1 id="eggTitle">Egrrischa ❤️</h1>
         <p id="introText"></p>
@@ -104,11 +133,16 @@
     <script src="js/music.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            typingEffect(
-                document.getElementById("introText"),
-                "Ada sesuatu yang spesial untukmu...",
-                60
-            );
+            setTimeout(function(){
+                document.getElementById("loadingScreen").style.display = "none";
+                document.getElementById("mainContainer").style.display = "block";
+
+                typingEffect(
+                    document.getElementById("introText"),
+                    "Ada sesuatu yang spesial untukmu...",
+                    60
+                );
+            }, 2500);
 
             function spawnFloatingHeart(){
                 const heart = document.createElement('div');
