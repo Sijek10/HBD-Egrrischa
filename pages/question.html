@@ -70,6 +70,15 @@
       color: white; font-size: 1.8em; font-weight: bold;
       text-align: center; z-index: 20; padding: 30px; box-sizing: border-box;
     }
+    .nav-row {
+      display: flex; gap: 10px; justify-content: center;
+      margin-top: 20px; position: relative; z-index: 2;
+    }
+    .nav-btn {
+      padding: 10px 22px; border: none; border-radius: 20px;
+      background: #888; color: white; font-size: 0.9em;
+      cursor: pointer; font-family: inherit;
+    }
   </style>
 </head>
 <body>
@@ -82,6 +91,11 @@
       <button class="btn no-btn" id="noBtn" style="right: 20px; top: 20px;">Tidak</button>
     </div>
     <div id="result"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" id="backBtn">⬅️ Back</button>
+    <button class="nav-btn" id="nextBtn">Next ➡️</button>
   </div>
 
   <div class="big-heart" id="bigHeart">❤️</div>
@@ -137,8 +151,16 @@
         finalMessage.style.display = 'flex';
       }, 900);
       setTimeout(function(){
-        window.location.href = "gallery.html";
+        window.location.href = "closing.html";
       }, 4000);
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', function(){
+      window.location.href = "closing.html";
+    });
+
+    document.getElementById('backBtn').addEventListener('click', function(){
+      window.location.href = "reasons.html";
     });
 
     let eggTap3 = 0;
