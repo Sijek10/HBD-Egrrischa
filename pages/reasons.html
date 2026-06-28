@@ -119,7 +119,6 @@
       { icon: "🎁", text: "Mau nggak jadi bagian dari semua alasan ini selamanya?", special: true }
     ];
 
-    // Shuffle posisi kartu setiap halaman dibuka
     function shuffle(arr){
       const a = [...arr];
       for(let i = a.length - 1; i > 0; i--){
@@ -136,7 +135,6 @@
     let openedCount = 0;
     const totalCards = shuffledReasons.length;
 
-    // Efek suara klik sederhana, tanpa file audio (Web Audio API)
     function playClickSound(){
       try {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
