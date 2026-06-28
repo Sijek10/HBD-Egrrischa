@@ -71,8 +71,11 @@
       text-align: center; z-index: 20; padding: 30px; box-sizing: border-box;
     }
     .nav-row {
+      position: fixed;
+      bottom: 20px;
+      left: 0; right: 0;
       display: flex; gap: 10px; justify-content: center;
-      margin-top: 20px; position: relative; z-index: 2;
+      z-index: 5;
     }
     .nav-btn {
       padding: 10px 22px; border: none; border-radius: 20px;
@@ -93,14 +96,14 @@
     <div id="result"></div>
   </div>
 
-  <div class="nav-row">
-    <button class="nav-btn" id="backBtn">⬅️ Back</button>
-    <button class="nav-btn" id="nextBtn">Next ➡️</button>
-  </div>
-
   <div class="big-heart" id="bigHeart">❤️</div>
   <div class="final-message" id="finalMessage">
     Duh, aww~ makasih sayang ❤️<br>Aku sayang kamu lebih dari ini!
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn" id="backBtn">⬅️ Back</button>
+    <button class="nav-btn" id="nextBtn">Next ➡️</button>
   </div>
 
   <script>
