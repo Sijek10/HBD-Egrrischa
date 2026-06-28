@@ -59,7 +59,23 @@
       cursor: pointer;
     }
     @keyframes shine { to { background-position: 200% center; } }
-    #letterText { color: #4a4a4a; font-size: 1.1em; line-height: 1.8; min-height: 120px; }
+    #letterText {
+      color: #4a4a4a; font-size: 1.1em; line-height: 1.8; min-height: 120px;
+      text-align: left;
+    }
+    .pen-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: #c2185b;
+      animation: penBlink 0.8s infinite;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    @keyframes penBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
     .heart {
       font-size: 2.2em; display: inline-block; margin-top: 10px;
       animation: heartbeat 1.2s infinite ease-in-out;
@@ -77,7 +93,7 @@
       background: #c2185b; color: white; font-size: 0.9em;
       cursor: pointer; font-family: inherit;
     }
-    .nav-row { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
+    .nav-row { display: flex; gap: 10px; justify-content: center; margin-top: 12px; flex-wrap: wrap; }
     @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes glowPulse {
       0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 20px rgba(255,105,135,0.3); }
@@ -95,6 +111,7 @@
     <br>
     <button class="music-btn" id="musicBtn">🎵 Putar Musik</button>
     <div class="nav-row">
+      <button class="music-btn" id="rereadBtn" style="background:#a16fc9;">🔁 Baca Ulang</button>
       <button class="music-btn" id="backBtn" style="background:#888;">⬅️ Back</button>
       <button class="music-btn" id="nextBtn" style="background:#888;">Next ➡️</button>
     </div>
@@ -104,17 +121,34 @@
     <source src="../assets/music1.mp3" type="audio/mpeg">
   </audio>
 
-  <script src="../js/typing.js"></script>
   <script src="../js/envelope.js"></script>
   <script src="../js/music.js"></script>
   <script>
+    const letterMessage = "Selamat ulang tahun, sayangku. Aku tidak sabar menanti hari aku bisa menyebutmu istriku. Terima kasih telah memilih berjalan bersamaku. Aku mencintaimu, hari ini dan selamanya.";
+
+    function writeLetter(element, text, speed){
+      let i = 0;
+      element.innerHTML = '<span class="pen-cursor"></span>';
+      function type(){
+        if(i < text.length){
+          element.innerHTML = text.substring(0, i + 1) + '<span class="pen-cursor"></span>';
+          i++;
+          setTimeout(type, speed);
+        } else {
+          element.innerHTML = text;
+        }
+      }
+      type();
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       openEnvelope();
-      typingEffect(
-        document.getElementById("letterText"),
-        "Selamat ulang tahun, sayangku. Aku tidak sabar menanti hari aku bisa menyebutmu istriku. Terima kasih telah memilih berjalan bersamaku. Aku mencintaimu, hari ini dan selamanya.",
-        40
-      );
+      const letterTextEl = document.getElementById("letterText");
+      writeLetter(letterTextEl, letterMessage, 40);
+
+      document.getElementById("rereadBtn").addEventListener("click", function(){
+        writeLetter(letterTextEl, letterMessage, 40);
+      });
 
       let isPlaying = false;
       document.getElementById("musicBtn").addEventListener("click", function(){
