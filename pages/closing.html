@@ -6,24 +6,76 @@
   <style>
     body {
       margin: 0; min-height: 100vh;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #ff9a9e, #fecfef);
+      background-size: 400% 400%;
+      animation: bgShift 8s ease infinite;
       font-family: 'Georgia', serif;
       display: flex; align-items: center; justify-content: center;
       text-align: center; padding: 24px; box-sizing: border-box;
       overflow: hidden; position: relative;
     }
-    .box {
-      background: rgba(255,255,255,0.92); border-radius: 20px;
-      padding: 40px 30px; max-width: 420px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      position: relative; z-index: 2;
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
-    h1 { color: #c2185b; margin-bottom: 16px; font-size: 1.4em; cursor: pointer; }
+    canvas#confetti {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .floating-heart, .floating-star {
+      position: fixed; bottom: -50px;
+      pointer-events: none; z-index: 1;
+      animation: floatUp linear forwards;
+      opacity: 0.85;
+    }
+    .floating-heart { font-size: 1.5em; }
+    .floating-star { font-size: 1.2em; animation-name: floatUpTwinkle; }
+    @keyframes floatUp {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(-110vh) translateX(var(--drift, 20px)) rotate(360deg); opacity: 0; }
+    }
+    @keyframes floatUpTwinkle {
+      0% { transform: translateY(0) scale(0.8); opacity: 0.9; }
+      50% { transform: translateY(-55vh) scale(1.3); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(0.8); opacity: 0; }
+    }
+    .box {
+      background: rgba(255,255,255,0.93);
+      border-radius: 20px; padding: 40px 30px; max-width: 420px;
+      position: relative; z-index: 2;
+      opacity: 0; transform: translateY(20px) scale(0.95);
+      animation: fadeInUp 1.2s ease forwards, glowPulse 3s ease-in-out infinite 1.2s;
+    }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.15), 0 0 20px rgba(255,105,135,0.3); }
+      50% { box-shadow: 0 10px 40px rgba(0,0,0,0.15), 0 0 45px rgba(255,105,135,0.7); }
+    }
+    h1 {
+      font-size: 1.5em; margin-bottom: 16px; cursor: pointer;
+      background: linear-gradient(90deg, #c2185b, #ff6b9d, #c2185b);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { to { background-position: 200% center; } }
     p { color: #4a4a4a; line-height: 1.7; margin-bottom: 24px; }
     .hug-btn {
       padding: 12px 26px; border: none; border-radius: 25px;
       background: #c2185b; color: white; font-size: 1em;
       cursor: pointer; font-family: inherit;
+      animation: pulseBtn 1.8s infinite ease-in-out;
+    }
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .back-btn {
+      margin-top: 14px; padding: 10px 22px; border: none; border-radius: 20px;
+      background: #888; color: white; font-size: 0.9em;
+      cursor: pointer; font-family: inherit;
+      display: block; margin-left: auto; margin-right: auto;
     }
     .hug-emoji {
       position: fixed; top: 50%; left: 50%;
@@ -39,10 +91,14 @@
   </style>
 </head>
 <body>
+  <canvas id="confetti"></canvas>
+
   <div class="box" id="box">
     <h1 id="eggTitle">Terima Kasih Sudah Membuka Semua Kejutan Ini 🥰</h1>
     <p>Semoga hari ulang tahunmu dipenuhi tawa dan kebahagiaan, sayangku.</p>
     <button class="hug-btn" id="hugBtn">Peluk Virtual 🤗</button>
+    <br>
+    <button class="back-btn" id="backBtn">⬅️ Back</button>
   </div>
 
   <div class="hug-emoji" id="hugEmoji">🤗❤️</div>
@@ -50,6 +106,10 @@
   <script>
     document.getElementById('hugBtn').addEventListener('click', function(){
       document.getElementById('hugEmoji').classList.add('show');
+    });
+
+    document.getElementById('backBtn').addEventListener('click', function(){
+      window.location.href = "question.html";
     });
 
     let eggTap6 = 0;
@@ -60,6 +120,71 @@
         eggTap6 = 0;
       }
     });
+
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const colors = ['#ff6b81', '#ffb6c1', '#ff85a2', '#ffd1dc', '#ff4d6d', '#ffe066', '#a29bfe'];
+    let confettiPieces = [];
+
+    function spawnConfetti(){
+      for(let i = 0; i < 2; i++){
+        confettiPieces.push({
+          x: Math.random() * canvas.width, y: -10,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speed: Math.random() * 3 + 2,
+          angle: Math.random() * 360,
+          spin: Math.random() * 0.2 - 0.1
+        });
+      }
+    }
+    function drawConfetti(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+        ctx.restore();
+        p.y += p.speed;
+        p.angle += p.spin;
+      });
+      confettiPieces = confettiPieces.filter(p => p.y < canvas.height + 20);
+      requestAnimationFrame(drawConfetti);
+    }
+    setInterval(spawnConfetti, 100);
+    drawConfetti();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    function spawnFloatingHeart(){
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+      heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9000);
+    }
+    setInterval(spawnFloatingHeart, 600);
+
+    function spawnFloatingStar(){
+      const star = document.createElement('div');
+      star.className = 'floating-star';
+      star.textContent = '✨';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+      star.style.animationDuration = (Math.random() * 4 + 6) + 's';
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 10000);
+    }
+    setInterval(spawnFloatingStar, 700);
   </script>
 </body>
 </html>
